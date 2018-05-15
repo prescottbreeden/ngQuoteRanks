@@ -1,0 +1,25 @@
+<form class="border">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="form-group">
+        <h4>Add author</h4>
+        <label for="author">Author Name:</label>
+        <input 
+          required
+          minlength="3"
+          ngModel
+          name="author" 
+          #author="ngModel"
+          [(ngModel)]="newAuthor.name"
+          type="text"
+          class="form-control">
+          <div class="alert alert-danger" *ngIf="author.touched && !author.valid">
+            <div *ngIf="author.errors.required">Author is required</div>
+            <div *ngIf="author.errors.minlength">Author must be at least 3 characters long</div>
+          </div>
+          <div class="alert alert-danger" *ngIf="errors.length > 0">{{ errors }}</div>
+        <button class="btn btn-primary" (click)="createAuthorService()">Add Author</button>
+      </div>
+    </div>
+  </div>
+</form>
