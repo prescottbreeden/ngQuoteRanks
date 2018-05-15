@@ -3,4 +3,18 @@
     margin: 10px 0px;
     border: 2px solid black;
     padding: 10px;
+    border-radius: 10px;
+}
+.row {
+    margin: 5px 0px;
+}
+
+.btn {
+    background-color: rgb(255, 255, 255);
+    border: 2px solid rgba(93, 93, 255, 0.709);
+    border-radius: 3px;
+}
+.btn:hover {
+    background-color: rgba(81, 81, 248, 0.709);
+    color: white;
 }

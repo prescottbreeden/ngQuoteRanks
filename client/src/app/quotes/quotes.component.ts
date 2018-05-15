@@ -7,7 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class QuotesComponent implements OnInit {
   addQuote = false;
-  quote = '';
+  editAuthor = {
+    name: '',
+    quote: {
+      content: '',
+      votes: 0
+    }
+  };
   errors = '';
   button = 'Add a Quote';
 
@@ -37,6 +43,10 @@ export class QuotesComponent implements OnInit {
   toggleAddQuote() {
     this.addQuote = !this.addQuote;
     this.addQuote ? this.button = 'Return to Quotes' : this.button = 'Add a Quote';
+  }
+
+  editQuoteService(quote._id) {
+    console.log('clicked edit quote');
   }
 
   deleteQuoteService(id) {

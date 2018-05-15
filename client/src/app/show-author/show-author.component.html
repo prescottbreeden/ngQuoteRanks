@@ -2,10 +2,10 @@
   <div class="card-body">
     <div class="row">
       <div class="col-6">
-        <h3>Author Name</h3>
+        <h5>Author Name</h5>
       </div>
       <div class="col-6">
-        <h3>Actions Available</h3>
+        <h5>Actions Available</h5>
       </div>
     </div>
     <div class="row" *ngFor="let author of authors">
@@ -13,13 +13,13 @@
         {{ author.name }}
       </div>
       <div class="col-2">
-        <button class="btn btn-primary btn-block" [routerLink]="['quotes', author._id]">View Quotes</button>
+        <button class="btn btn-block" [routerLink]="['quotes', author._id]">View Quotes</button>
       </div>
       <div class="col-2">
-        <button class="btn btn-primary btn-block" [routerLink]="['edit', author._id]">Edit</button>
+        <button class="btn btn-block" [routerLink]="['edit', author._id]">Edit</button>
       </div>
       <div class="col-2">
-        <button class="btn btn-primary btn-block" (click)="deleteAuthorService(author._id)">Delete</button>
+        <button class="btn btn-block" (click)="deleteAuthorService(author._id)">Delete</button>
       </div>   
     </div>
   </div>

@@ -44,6 +44,9 @@ errors = '';
     });
   }
 
+  testCall(value) {
+    console.log(value);
+  }
 
 
 }
