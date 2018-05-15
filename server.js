@@ -18,10 +18,26 @@ app.use(bodyParser.json());
 // - - - - = = = = Model = = = = - - - - 
 const uniqueValidator = require('mongoose-unique-validator');
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/authors');
+mongoose.connect('mongodb://localhost/quote_ranks');
 mongoose.connection.on('connected', () => console.log('connected to MongoDB'));
 mongoose.Promise = global.Promise;
 const { Schema } = mongoose;
+
+// quote schema
+const quoteSchema = new Schema({
+    content: {
+        type: String,
+        trim: true,
+        required: false,
+        minlength: [3, 'Quotes must be greater than 3 characters']
+    },
+    votes: {
+        type: Number,
+        required: false,
+        default: 0
+    }
+});
+const Quote = mongoose.model('Quote', quoteSchema);
 
 // author schema
 const authorSchema = new Schema({
@@ -31,11 +47,11 @@ const authorSchema = new Schema({
         required: [true, 'Author name is required'],
         minlength: [3, 'Author name must be greater than 3 characters'],
         unique: true
-    }
+    },
+    quotes: [quoteSchema]
 }, { timestamps: true });
 authorSchema.plugin(uniqueValidator, { message: '{PATH} must be unique.' });
 const Author = mongoose.model('Author', authorSchema);
-
 
 // - - - - = = = = Controller = = = = - - - - 
 const authorController = {

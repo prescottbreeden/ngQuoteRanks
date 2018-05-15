@@ -6,11 +6,11 @@ import { AppComponent } from './app.component';
 import { SubmitAuthorComponent } from './submit-author/submit-author.component';
 import { EditAuthorComponent } from './edit-author/edit-author.component';
 import { ShowAuthorComponent } from './show-author/show-author.component';
-import { NavComponent } from './nav/nav.component';
 import { HttpService } from './http.service';
 import { AppRoutingModule } from './app-routing.module';
 import { TeapotComponent } from './teapot/teapot.component';
 import { HttpClientModule } from '@angular/common/http';
+import { QuotesComponent } from './quotes/quotes.component';
 
 @NgModule({
   declarations: [
@@ -18,8 +18,8 @@ import { HttpClientModule } from '@angular/common/http';
     SubmitAuthorComponent,
     EditAuthorComponent,
     ShowAuthorComponent,
-    NavComponent,
-    TeapotComponent
+    TeapotComponent,
+    QuotesComponent
   ],
   imports: [
     BrowserModule,
