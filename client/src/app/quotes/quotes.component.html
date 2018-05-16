@@ -29,7 +29,7 @@
               <button class="btn btn-block" (click)="voteDownService(i)">Vote Down</button>
             </div>
             <div class="col-2">
-              <button class="btn btn-block" (click)="editQuoteService(i)">Edit</button>
+              <button class="btn btn-block" [routerLink]="[i]">Edit</button>
             </div>   
             <div class="col-2">
               <button class="btn btn-block" (click)="deleteQuoteService(i)">Delete</button>

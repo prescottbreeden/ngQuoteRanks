@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { TeapotComponent } from './teapot/teapot.component';
 import { HttpClientModule } from '@angular/common/http';
 import { QuotesComponent } from './quotes/quotes.component';
+import { EditQuoteComponent } from './edit-quote/edit-quote.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { QuotesComponent } from './quotes/quotes.component';
     EditAuthorComponent,
     ShowAuthorComponent,
     TeapotComponent,
-    QuotesComponent
+    QuotesComponent,
+    EditQuoteComponent
   ],
   imports: [
     BrowserModule,

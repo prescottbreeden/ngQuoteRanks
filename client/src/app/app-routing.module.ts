@@ -1,3 +1,4 @@
+import { EditQuoteComponent } from './edit-quote/edit-quote.component';
 import { ShowAuthorComponent } from './show-author/show-author.component';
 import { EditAuthorComponent } from './edit-author/edit-author.component';
 import { SubmitAuthorComponent } from './submit-author/submit-author.component';
@@ -12,6 +13,7 @@ const routes: Routes = [
     { path: 'authors/new', component: SubmitAuthorComponent},
     { path: 'authors/edit/:id', component: EditAuthorComponent},
     { path: 'authors/quotes/:id', component: QuotesComponent},
+    { path: 'authors/quotes/:id/:idx', component: EditQuoteComponent},
     { path: '**', component: TeapotComponent}
 ];
 

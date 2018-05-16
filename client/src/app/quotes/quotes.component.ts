@@ -68,7 +68,9 @@ export class QuotesComponent implements OnInit {
   }
   deleteQuoteService(id) {
     console.log('clicked delete quote');
-    this._httpService.editAuthor(this.authorId, {$set: {quotes: {votes: this.author.quotes[id].votes}}}).subscribe(data => {
+    console.log(this.author.quotes[id]);
+    this.author.quotes.splice(id, 1);
+    this._httpService.editAuthor(this.authorId, this.author).subscribe(data => {
       console.log(data);
     });
   }
