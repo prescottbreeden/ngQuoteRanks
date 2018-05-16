@@ -42,7 +42,12 @@ editAuthor: any;
       this.editAuthor.quotes[this.quoteIdx].content = this.content;
       this._httpService.editAuthor(this.authorId, this.editAuthor).subscribe(data => {
         console.log(data);
-        this._router.navigate([`/authors/quotes/${this.authorId}`]);
+        if (data['message'] !== 'error') {
+          this._router.navigate([`/authors/quotes/${this.authorId}`]);
+        } else {
+          this.errors = data['errors']['errors']['name']['message'];
+          console.log(data['errors']['errors']['name']['message']);
+        }
       });
     }
 }

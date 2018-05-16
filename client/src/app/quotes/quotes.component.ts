@@ -1,6 +1,7 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpService } from './../http.service';
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators, ValidationErrors } from '@angular/forms';
 
 @Component({
   selector: 'app-quotes',
@@ -47,6 +48,12 @@ export class QuotesComponent implements OnInit {
     console.log('clicked add quote');
     this._httpService.editAuthor(id, {$push: {quotes: {content: `"${this.content}"`}}}).subscribe(data => {
       console.log(data);
+      if (data['message'] !== 'error') {
+        this._router.navigate(['/authors']);
+      } else {
+        this.errors = data['errors']['errors']['name']['message'];
+        console.log(data['errors']['errors']['name']['message']);
+      }
       this.toggleAddQuote();
     });
   }
@@ -63,9 +70,7 @@ export class QuotesComponent implements OnInit {
       console.log(data);
     });
   }
-  editQuoteService() {
-    console.log('clicked edit quote');
-  }
+
   deleteQuoteService(id) {
     console.log('clicked delete quote');
     console.log(this.author.quotes[id]);

@@ -6,18 +6,19 @@
         <label for="author">Quote:</label>
         <input 
           required
-          minlength="3"
+          minlength="2"
           name="quote" 
-          #quote
+          ngModel
+          #quote="ngModel"
           [(ngModel)]="content"
           type="text"
           class="form-control">
           <div class="alert alert-danger" *ngIf="quote.touched && !quote.valid">
             <div *ngIf="quote.errors.required">Quote is required</div>
-            <div *ngIf="quote.errors.minlength">Quote must be at least 3 characters long</div>
+            <div *ngIf="quote.errors.minlength">Quote must be at least 2 characters long</div>
           </div>
           <div class="alert alert-danger" *ngIf="errors.length > 0">{{ errors }}</div>
-        <button class="btn" (click)="editAuthorService()">Edit Quote</button>
+        <button class="btn" [disabled]="!quote.valid" (click)="editAuthorService()">Edit Quote</button>
       </div>
     </div>
   </div>

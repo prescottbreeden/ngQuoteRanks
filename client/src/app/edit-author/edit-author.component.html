@@ -17,7 +17,7 @@
             <div *ngIf="author.errors.minlength">Author must be at least 3 characters long</div>
           </div>
           <div class="alert alert-danger" *ngIf="errors.length > 0">{{ errors }}</div>
-        <button class="btn" (click)="editAuthorService()">Edit Author</button>
+        <button class="btn" [disabled]="!author.valid" (click)="editAuthorService()">Edit Author</button>
       </div>
     </div>
   </div>
