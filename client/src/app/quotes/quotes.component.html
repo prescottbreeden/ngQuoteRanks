@@ -14,8 +14,8 @@
         </div>
       </div>
       <div class="all-quotes">
-        <div *ngIf="quotes">
-          <div class="row" *ngFor="let quote of quotes">
+        <div *ngIf="author">
+          <div class="row" *ngFor="let quote of author.quotes; let i = index">
             <div class="col-3">
               {{ quote.content }}
             </div>
@@ -23,16 +23,16 @@
               {{ quote.votes }}
             </div>
             <div class="col-2">
-              <button class="btn btn-block" (click)="voteUpService(quote._id)">Vote Up</button>
+              <button class="btn btn-block" (click)="voteUpService(i)">Vote Up</button>
             </div>
             <div class="col-2">
-              <button class="btn btn-block" (click)="voteDownService(quote._id)">Vote Down</button>
+              <button class="btn btn-block" (click)="voteDownService(i)">Vote Down</button>
             </div>
             <div class="col-2">
-              <button class="btn btn-block" (click)="editQuoteService(quote._id)">Edit</button>
+              <button class="btn btn-block" (click)="editQuoteService(i)">Edit</button>
             </div>   
             <div class="col-2">
-              <button class="btn btn-block" (click)="deleteQuoteService(quote._id)">Delete</button>
+              <button class="btn btn-block" (click)="deleteQuoteService(i)">Delete</button>
             </div>   
           </div>
         </div>
@@ -54,7 +54,7 @@
             minlength="3"
             name="quote" 
             #quote
-            [(ngModel)]="editAuthor.quote.content"
+            [(ngModel)]="content"
             type="text"
             class="form-control">
             <div class="alert alert-danger" *ngIf="quote.touched && !quote.valid">
@@ -62,7 +62,7 @@
               <div *ngIf="quote.errors.minlength">Quote must be at least 3 characters long</div>
               <div class="alert alert-danger" *ngIf="errors.length > 0">{{ errors }}</div>
             </div>
-          <button class="btn" (click)="addQuoteService()">Add Quote</button>
+          <button class="btn" (click)="addQuoteService(author._id)">Add Quote</button>
         </div>
       </div>
     </div>

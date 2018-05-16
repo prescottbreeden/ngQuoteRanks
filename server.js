@@ -27,13 +27,10 @@ const { Schema } = mongoose;
 const quoteSchema = new Schema({
     content: {
         type: String,
-        trim: true,
-        required: false,
         minlength: [3, 'Quotes must be greater than 3 characters']
     },
     votes: {
         type: Number,
-        required: false,
         default: 0
     }
 });
@@ -79,7 +76,7 @@ const authorController = {
     },
     edit: (request, response) => {
 
-        Author.updateOne({_id: request.params.id}, request.body)
+        Author.findByIdAndUpdate({_id: request.params.id}, request.body, {new: true})
             .then(author => response.json( {message: "success", data: author} ))
             .catch(error => response.json( {message: "error", errors: error} ));
     },

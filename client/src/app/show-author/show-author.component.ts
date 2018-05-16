@@ -25,14 +25,14 @@ export class ShowAuthorComponent implements OnInit {
   getAuthorService(id) {
     this._httpService.getAuthor(id).subscribe(data => {
       console.log(data);
-    })
+    });
   }
 
   deleteAuthorService(id) {
     this._httpService.deleteAuthor(id).subscribe(data => {
       console.log(data);
-      this.getAllAuthorService()
-    })
+      this.getAllAuthorService();
+    });
   }
 
 }

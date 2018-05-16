@@ -1,3 +1,5 @@
+import { ActivatedRoute, Router } from '@angular/router';
+import { HttpService } from './../http.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,58 +9,67 @@ import { Component, OnInit } from '@angular/core';
 })
 export class QuotesComponent implements OnInit {
   addQuote = false;
-  editAuthor = {
-    name: '',
-    quote: {
-      content: '',
-      votes: 0
-    }
-  };
   errors = '';
   button = 'Add a Quote';
+  authorId: string;
+  content = '';
+  author;
 
-  quotes = [
-    {
-      content: 'rubber baby buggy bumpers',
-      votes: 5
-    },
-    {
-      content: 'I was born a poor black child',
-      votes: 2
-    },
-    {
-      content: 'who is your daddy and what does he do',
-      votes: 1
-    },
-    {
-      content: 'it\'s not a tumor',
-      votes: 20
-    },
-];
-  constructor() { }
+
+
+  constructor(
+    private _httpService: HttpService,
+    private _route: ActivatedRoute,
+    private _router: Router) { }
 
   ngOnInit() {
+    this._route.params.subscribe(params => {
+      console.log(`The parent params: ${params}`);
+      this.authorId = params['id'];
+      this.getAuthorService(this.authorId);
+    });
   }
 
   toggleAddQuote() {
     this.addQuote = !this.addQuote;
     this.addQuote ? this.button = 'Return to Quotes' : this.button = 'Add a Quote';
+    this.getAuthorService(this.authorId);
   }
 
-  editQuoteService(id) {
-    console.log('clicked edit quote');
+  getAuthorService(id) {
+    this._httpService.getAuthor(id).subscribe(data => {
+      console.log(data);
+      this.author = data['data'];
+    });
   }
 
-  deleteQuoteService(id) {
-    console.log('clicked delete quote');
+  addQuoteService(id) {
+    console.log('clicked add quote');
+    this._httpService.editAuthor(id, {$push: {quotes: {content: `"${this.content}"`}}}).subscribe(data => {
+      console.log(data);
+      this.toggleAddQuote();
+    });
   }
+
   voteUpService(id) {
-    console.log('clicked up-vote');
+    this.author.quotes[id].votes++;
+    this._httpService.editAuthor(this.authorId, this.author).subscribe(data => {
+      console.log(data);
+    });
   }
   voteDownService(id) {
-    console.log('clicked down-vote');
+    this.author.quotes[id].votes--;
+    this._httpService.editAuthor(this.authorId, this.author).subscribe(data => {
+      console.log(data);
+    });
   }
-  addQuoteService() {
-    console.log('clicked add quote');
+  editQuoteService() {
+    console.log('clicked edit quote');
+  }
+  deleteQuoteService(id) {
+    console.log('clicked delete quote');
+    this._httpService.editAuthor(this.authorId, {$set: {quotes: {votes: this.author.quotes[id].votes}}}).subscribe(data => {
+      console.log(data);
+    });
   }
 }
