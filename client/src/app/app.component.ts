@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
@@ -11,11 +11,6 @@ export class AppComponent {
     private _route: ActivatedRoute,
     private _router: Router
   ) {}
-
-  ngOnInit() {
-    this._route.params.subscribe((params: Params) => console.log(params['id']));
-  
-  }
 
   goHome() {
     this._router.navigate(['/author']);

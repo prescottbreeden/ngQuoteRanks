@@ -15,7 +15,7 @@ app.use(express.static(__dirname + '/client/dist/client'));
 app.use(bodyParser.json());
 
 
-// - - - - = = = = Model = = = = - - - - 
+// - - - - = = = = Model = = = = - - - - //
 const uniqueValidator = require('mongoose-unique-validator');
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/quote_ranks');
@@ -23,41 +23,44 @@ mongoose.connection.on('connected', () => console.log('connected to MongoDB'));
 mongoose.Promise = global.Promise;
 const { Schema } = mongoose;
 
-// quote schema
-const quoteSchema = new Schema({
-    content: {
-        type: String,
-        minlength: [3, 'Quotes must be greater than 3 characters']
-    },
-    votes: {
-        type: Number,
-        default: 0
-    }
-});
-const Quote = mongoose.model('Quote', quoteSchema);
+//-----------------------//
+//---- author schema ----//
+//-----------------------//
 
-// author schema
 const authorSchema = new Schema({
     name: {
         type: String,
-        trim: true,
         required: [true, 'Author name is required'],
         minlength: [3, 'Author name must be greater than 3 characters'],
         unique: true
     },
-    quotes: [quoteSchema]
+    quotes: [{
+            content: { 
+                type: String, 
+                minlength: [3, 'Quote name must be greater than 3 characters']
+            },
+            votes: { 
+                type: Number, 
+                default: 0
+            }
+        }]
 }, { timestamps: true });
-authorSchema.plugin(uniqueValidator, { message: '{PATH} must be unique.' });
+
 const Author = mongoose.model('Author', authorSchema);
 
 // - - - - = = = = Controller = = = = - - - - 
 const authorController = {
     index: (request, response) => {
   
-        Author.find({})
+        Author.find()
             .then(authors => response.json( {message: "success", data: authors} ))
             .catch(error => response.json( {message: "error", errors: error } ));
-  
+    },
+    find: (request, response) => {
+
+        Author.find({name: request.params.name})
+            .then(author => response.json( {message: "success", data: author} ))
+            .catch(error => response.json( {message: "error", errors: error}));
     },
     getOne: (request, response) => {
 
@@ -66,17 +69,17 @@ const authorController = {
             .catch(error => response.json( {message: "error", errors: error}));
     },
     create: (request, response) => {
+        console.log("dot name: " + request.body.name)
         const newAuthor = new Author({
             name: request.body.name
         })
         Author.create(newAuthor)
             .then(author => response.json( {message: "success", data: author} ))
             .catch(error => response.json( {message: "error", errors: error} ));
-  
     },
     edit: (request, response) => {
 
-        Author.findByIdAndUpdate({_id: request.params.id}, request.body, {new: true})
+        Author.findByIdAndUpdate({_id: request.params.id}, request.body, {upsert: true, new: true, runValidators: true})
             .then(author => response.json( {message: "success", data: author} ))
             .catch(error => response.json( {message: "error", errors: error} ));
     },
@@ -94,6 +97,7 @@ const authorController = {
     .get('/api/authors', authorController.index)
     .post('/api/authors', authorController.create)
     .get('/api/authors/:id', authorController.getOne)
+    .get('/api/authors/:name', authorController.find)
     .put('/api/authors/:id', authorController.edit)
     .delete('/api/authors/:id', authorController.delete)
     .all("*", (req,res,next) => {

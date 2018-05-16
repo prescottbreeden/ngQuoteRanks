@@ -10,8 +10,8 @@ import { Component, OnInit } from '@angular/core';
 export class EditQuoteComponent implements OnInit {
 content = '';
 errors = '';
-authorId;
-quoteIdx;
+authorId: any;
+quoteIdx: any;
 editAuthor: any;
 
   constructor(
@@ -45,8 +45,8 @@ editAuthor: any;
         if (data['message'] !== 'error') {
           this._router.navigate([`/authors/quotes/${this.authorId}`]);
         } else {
-          this.errors = data['errors']['errors']['name']['message'];
-          console.log(data['errors']['errors']['name']['message']);
+          this.errors = data['errors']['errors'][`quotes.${this.quoteIdx}.content`]['properties']['message'];
+          console.log(this.errors);
         }
       });
     }

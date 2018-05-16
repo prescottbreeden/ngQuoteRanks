@@ -13,6 +13,9 @@ export class HttpService {
     return this._http.get('/api/authors');
   }
 
+  uniqueCheck(name) {
+    return this._http.get(`/api/authors/${name}`);
+  }
   getAuthor(id) {
     return this._http.get(`/api/authors/${id}`);
   }

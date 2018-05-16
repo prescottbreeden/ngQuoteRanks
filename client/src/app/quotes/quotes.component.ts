@@ -46,7 +46,7 @@ export class QuotesComponent implements OnInit {
 
   addQuoteService(id) {
     console.log('clicked add quote');
-    this._httpService.editAuthor(id, {$push: {quotes: {content: `"${this.content}"`}}}).subscribe(data => {
+    this._httpService.editAuthor(id, {$push: {quotes: {content: this.content}}}).subscribe(data => {
       console.log(data);
       if (data['message'] !== 'error') {
         this._router.navigate(['/authors']);

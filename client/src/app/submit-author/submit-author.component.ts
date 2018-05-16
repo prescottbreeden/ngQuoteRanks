@@ -18,17 +18,19 @@ errors = '';
     private _httpService: HttpService,
     private _router: Router) { }
 
-  createAuthorService(newAuthor) {
-    console.log(newAuthor);
-    this._httpService.createAuthor(this.newAuthor).subscribe(data => {
-      console.log(data);
-      if (data['message'] !== 'error') {
-        this._router.navigate(['/authors']);
+  createAuthorService() {
+    this._httpService.createAuthor(this.newAuthor).subscribe(response => {
+      if (response['message'] === 'error') {
+        if (response['errors'].code === 11000) {
+          this.errors = 'Author name must be unique';
+        } else {
+          this.errors = response['errors']['errors']['name']['message'];
+        }
       } else {
-        this.errors = data['errors']['errors']['name']['message'];
-        console.log(data['errors']['errors']['name']['message']);
+        if (response['message'] !== 'error') {
+          this._router.navigate(['/authors']);
+        }
       }
     });
   }
-
 }

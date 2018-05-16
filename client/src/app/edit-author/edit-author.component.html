@@ -7,8 +7,9 @@
         <input 
           required
           minlength="3"
-          name="author" 
-          #author
+          name="author"
+          ngModel 
+          #author="ngModel"
           [(ngModel)]="editAuthor.name"
           type="text"
           class="form-control">

@@ -13,7 +13,7 @@
           [(ngModel)]="newAuthor.name"
           type="text"
           class="form-control">
-          <div class="alert alert-danger" *ngIf="author.touched && !author.valid">
+          <div class="alert alert-danger" *ngIf="(author.touched && !author.valid)">
             <div *ngIf="author.errors.required">Author is required</div>
             <div *ngIf="author.errors.minlength">Author must be at least 3 characters long</div>
           </div>
