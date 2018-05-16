@@ -45,7 +45,7 @@ export class QuotesComponent implements OnInit {
     this.addQuote ? this.button = 'Return to Quotes' : this.button = 'Add a Quote';
   }
 
-  editQuoteService(quote._id) {
+  editQuoteService(id) {
     console.log('clicked edit quote');
   }
 
